@@ -9,12 +9,14 @@ import (
 	"strings"
 )
 
+const upperBoundary = 100
+
 // number guessing game
 func main() {
 	// TODO: 1. generate a random number
-	randNumber := int64(rand.Intn(100))
+	randNumber := int64(rand.Intn(upperBoundary))
 	reader := bufio.NewReader(os.Stdin)
-	fmt.Println("Enter the number: ")
+	fmt.Printf("Enter the number guess between (0,%d): \n", upperBoundary)
 	fmt.Println("-----------------------------")
 	for {
 		fmt.Print("-> ")
