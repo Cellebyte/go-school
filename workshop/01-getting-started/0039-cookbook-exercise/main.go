@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 type Recipe struct {
 	Name        string
 	Ingredients map[string]int
@@ -24,6 +26,15 @@ func main() {
 	totalIngredients := make(map[string]int)
 
 	// TODO: get the total number of ingredients
-
+	for _, recipe := range cookBook {
+		for ingredient, amount := range recipe.Ingredients {
+			if storedAmount, ok := totalIngredients[ingredient]; ok {
+				totalIngredients[ingredient] = amount + storedAmount
+			} else {
+				totalIngredients[ingredient] = amount
+			}
+		}
+	}
 	// TODO: print the total number of in
+	fmt.Printf("%v", totalIngredients)
 }

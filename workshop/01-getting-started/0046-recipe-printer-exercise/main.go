@@ -1,11 +1,29 @@
 package main
 
+import (
+	"fmt"
+	"strings"
+)
+
+type Ingredients map[string]int
+
 type Recipe struct {
-	Name        string
-	Ingredients map[string]int
+	Name string
+	Ingredients
 }
 
 // Implement stringer here
+func (i Ingredients) String() string {
+	var ingredients []string
+	for name, amoount := range i {
+		ingredients = append(ingredients, fmt.Sprintf("%v: %vg", name, amoount))
+	}
+	return strings.Join(ingredients, ", ")
+}
+
+func (r Recipe) String() string {
+	return fmt.Sprintf("%v: (%s)", r.Name, r.Ingredients.String())
+}
 
 func main() {
 	cookBook := map[string]Recipe{
@@ -25,5 +43,6 @@ func main() {
 
 	for _, recipe := range cookBook {
 		// TODO
+		fmt.Println(recipe.String())
 	}
 }
