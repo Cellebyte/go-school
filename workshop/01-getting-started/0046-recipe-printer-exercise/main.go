@@ -14,12 +14,11 @@ type Recipe struct {
 
 // Implement stringer here
 func (i Ingredients) String() string {
-	var ingredients string
-	for name, amount := range i {
-		ingredients += fmt.Sprintf("%v: %vg", name, amount)
-		ingredients += ", "
+	var ingredients []string
+	for name, amoount := range i {
+		ingredients = append(ingredients, fmt.Sprintf("%v: %vg", name, amoount))
 	}
-	return strings.TrimSuffix(ingredients, ", ")
+	return strings.Join(ingredients, ", ")
 }
 
 func (r Recipe) String() string {
