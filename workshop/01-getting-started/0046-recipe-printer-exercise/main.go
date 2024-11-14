@@ -8,21 +8,21 @@ import (
 type Ingredients map[string]int
 
 type Recipe struct {
-	Name string
-	Ingredients
+	Name        string
+	Ingredients Ingredients
 }
 
 // Implement stringer here
 func (i Ingredients) String() string {
 	var ingredients []string
 	for name, amoount := range i {
-		ingredients = append(ingredients, fmt.Sprintf("%v: %vg", name, amoount))
+		ingredients = append(ingredients, fmt.Sprintf("%v: %v", name, amoount))
 	}
 	return strings.Join(ingredients, ", ")
 }
 
 func (r Recipe) String() string {
-	return fmt.Sprintf("%v: (%s)", r.Name, r.Ingredients.String())
+	return fmt.Sprintf("%v: (%s)", r.Name, r.Ingredients)
 }
 
 func main() {
@@ -43,6 +43,6 @@ func main() {
 
 	for _, recipe := range cookBook {
 		// TODO
-		fmt.Println(recipe.String())
+		fmt.Println(recipe)
 	}
 }
