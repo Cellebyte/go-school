@@ -15,8 +15,8 @@ type Recipe struct {
 // Implement stringer here
 func (i Ingredients) String() string {
 	var ingredients []string
-	for name, amoount := range i {
-		ingredients = append(ingredients, fmt.Sprintf("%v: %vg", name, amoount))
+	for name, amount := range i {
+		ingredients = append(ingredients, fmt.Sprintf("%v: %vg", name, amount))
 	}
 	return strings.Join(ingredients, ", ")
 }
