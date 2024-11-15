@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 )
 
@@ -40,15 +41,22 @@ var recipes = map[string]Recipe{
 
 func main() {
 	// recipes list handler
-	http.HandleFunc("TODO", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/recipes", func(w http.ResponseWriter, r *http.Request) {
 		// format all recipes and write them to the response writer
+		_, _ = fmt.Fprintf(w, "%v", recipes)
 	})
 
 	// recipes id handler
-	http.HandleFunc("TODO", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/recipes/{id}", func(w http.ResponseWriter, r *http.Request) {
 		id := r.PathValue("id")
 
 		// get the recipe with the given id and write it to the response writer
+		recipe, ok := recipes[id]
+		if !ok {
+			http.Error(w, "cannot find recipe", 0)
+			return
+		}
+		_, _ = fmt.Fprintf(w, "%v", recipe)
 	})
 
 	// start server on port 8090
