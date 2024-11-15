@@ -1,30 +1,32 @@
 package file
 
 import (
+	"encoding/json"
 	"fmt"
 	"goschool/0026-recipe-cli-exercise/api"
-	"io"
 	"os"
 )
 
-func SaveToFile(filename string, meal api.Meal) error {
-	// TODO this implementation is ugly, fix it
-
-	fileContent := fmt.Sprintln(meal)
-
-	f, err := os.Create(filename)
+func SaveToFile(meal api.Meal) error {
+	fileContent, err := json.MarshalIndent(meal, "", "  ")
 	if err != nil {
 		return err
 	}
-
-	defer func(f *os.File) {
-		_ = f.Close()
-	}(f)
-
-	_, err = io.WriteString(f, fileContent)
+	filename := fmt.Sprintf("%s.json", meal.IDMeal)
+	err = os.WriteFile(filename, fileContent, 0644)
 	if err != nil {
 		return err
 	}
-
 	return nil
+}
+
+func LoadFromFile(filename string) (api.Meal, error) {
+	var meal api.Meal
+	var err error
+	data, err := os.ReadFile(filename)
+	if err != nil {
+		return meal, err
+	}
+	json.Unmarshal(data, &meal)
+	return meal, err
 }

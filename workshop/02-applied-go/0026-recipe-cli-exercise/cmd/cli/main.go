@@ -43,8 +43,13 @@ func main() {
 					fmt.Println("Found meals:", meals)
 
 					if c.Bool("save") {
-						// TODO: save recipe to file
-						// use SaveToFile from file package
+						for _, meal := range meals {
+							err := file.SaveToFile(meal)
+							if err != nil {
+								fmt.Println("Error saving searched meal:", err)
+								return err
+							}
+						}
 					}
 
 					return nil
@@ -71,7 +76,7 @@ func main() {
 					fmt.Printf("Random meal:\nID:%s Name: %s\n", meal.IDMeal, meal.StrMeal)
 
 					if c.Bool("save") {
-						err := file.SaveToFile(meal.IDMeal+".txt", meal)
+						err := file.SaveToFile(meal)
 						if err != nil {
 							fmt.Println("Error saving random meal:", err)
 							return err
@@ -104,12 +109,16 @@ func main() {
 					meal, err := api.GetMealById(id)
 					if err != nil {
 						fmt.Println("Error getting meal by id:", err)
+						return err
 					}
-					fmt.Printf("Random meal:\nID:%s Name: %s\n", meal.IDMeal, meal.StrMeal)
+					fmt.Printf("meal:\nID:%s Name: %s\n", meal.IDMeal, meal.StrMeal)
 
 					if c.Bool("save") {
-						// TODO: save recipe to file
-						// use SaveToFile from file package
+						err := file.SaveToFile(meal)
+						if err != nil {
+							fmt.Println("Error saving random meal:", err)
+							return err
+						}
 					}
 
 					return nil
