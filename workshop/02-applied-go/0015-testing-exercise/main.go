@@ -13,7 +13,7 @@ type Recipe struct {
 func (r Recipe) CalculateTotalCalories() int {
 	totalCalories := 0
 	for _, ingredient := range r.Ingredients {
-		totalCalories += ingredient.Calories
+		totalCalories += ingredient.Calories * ingredient.Amount
 	}
 	return totalCalories
 }
